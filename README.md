@@ -4,7 +4,7 @@
 
 <div>
     <p align="center">
-    ICIAP 2025 - <a href="https://intelligolabs.github.io/L-VQAScore">Project Page</a></strong> 🎉 
+    ICIAP 2025 - <a href="https://intelligolabs.github.io/L-VQAScore">Project Page</a></strong>  
     </p>
 </div>
 
