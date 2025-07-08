@@ -1,6 +1,6 @@
 <h1 align="center">
 Evaluating Attribute Confusion in Fashion 
-    Text-to-Image Generation
+Text-to-Image Generation
 </h1>
 
 <div>
