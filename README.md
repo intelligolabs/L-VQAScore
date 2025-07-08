@@ -11,7 +11,7 @@ Evaluating Attribute Confusion in Fashion
 
 <div>
     <p align="center">
-    <a Ziyue Liu, Federico Girella, Yiming Wang, Davide Talon
+    Ziyue Liu, Federico Girella, Yiming Wang, Davide Talon
     </p>
 </div>
 
