@@ -49,9 +49,9 @@ To measure the alignment between the conditioning prompt and the generated image
 </p>
 
 ## Key Contributions
-- We investigate and validate the overlooked <strong>attribute confusion</strong> problem in T2I evaluation with <strong>a carefully designed evaluation data</strong> covering both automated metrics and human evaluation.
+- We investigate and validate the overlooked <strong>attribute confusion</strong> problem in T2I evaluation with a <strong>carefully designed evaluation data</strong> covering both automated metrics and human evaluation.
 - We demonstrate that visual localization and attribute-centric VQA are effective strategies in addressing attribute confusion evaluation.
-- We propose <strong>a new human evaluation protocol</strong> and <strong>an automated T2I evaluation method L-VQAScore</strong>, leveraging both reflection and leakage questions on localized visual content.
+- We propose a <strong>new human evaluation protocol</strong> and an <strong>automated T2I evaluation method L-VQAScore</strong>, leveraging both reflection and leakage questions on localized visual content.
 - L-VQAScore effectively mitigates the attribute confusion in T2I evaluation, achieving <strong>improved correlation with human annotations</strong> compared to state-of-the-art metrics.
 
 ![Performance Comparision](/static/image/results.png)
