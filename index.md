@@ -57,5 +57,10 @@ We direct interested readers to our concurrent research for investigation into t
 
 ## Citation
 ```
-coming soon
+@inproceedings{liu2025evaluating,
+  title={Evaluating Attribute Confusion in Fashion Text-to-Image Generation},
+  author={Liu, Ziyue and others},
+  booktitle={International Conference on Image Analysis and Processing},
+  year={2025},
+}
 ```
