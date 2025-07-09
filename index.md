@@ -34,9 +34,9 @@ On a newly curated dataset featuring challenging compositional alignment scenari
 ---
 
 ## The Attribute Confusion Problem
-Attribute confusion occurs when a visuo-textual model misassigns attributes to irrelevant regions within an image, resulting in semantically inaccurate results. While the attribute confusion problem impacts T2I generative models, its automated evaluation requires metrics effectively recognizing correct entity-attribute associations - this is underexplored.
+Attribute confusion occurs <em>when a visuo-textual model misassigns attributes to irrelevant regions within an image</em>, resulting in semantically inaccurate results. While the attribute confusion problem impacts T2I generative models, its automated evaluation requires metrics effectively recognizing correct entity-attribute associations - this is underexplored.
 
-We examined how state-of-the-art T2I evaluation metrics handle attribute confusion in the paper. As revealed in recent work, VLMs exhibit behaviors akin to bag-of-words models in cross-modal understanding. Thus, they are limited in evaluating compositional semantics with complex entity-attribute bindings, which can be very critical for T2I in domains like fashion. Recent VQA-based metrics have enhanced the evaluation of entity-attribute binding by checking whether each attribute is correctly reflected on its corresponding entity. However, as highlighted by our preliminary evaluation, existing T2I metrics struggle to recognize attribute confusion cases, in other words, when the attributes are reflected on the wrong entities. 
+We examined how state-of-the-art T2I evaluation metrics handle attribute confusion in the paper. As revealed in recent work, VLMs exhibit behaviors akin to bag-of-words models in cross-modal understanding. Thus, they are limited in evaluating compositional semantics with complex entity-attribute bindings, which can be very critical for T2I in domains like fashion. Recent VQA-based metrics have enhanced the evaluation of entity-attribute binding by checking whether each attribute is correctly reflected on its corresponding entity. However, as highlighted by our preliminary evaluation, <em>existing T2I metrics struggle to recognize attribute confusion cases</em>, in other words, when the attributes are reflected on the wrong entities. 
 
 In this paper, we propose an improved human evaluation protocol and an automatic T2I evaluation method in assessing complex prompts with fine-grained semantics. Particularly, we focus on measuring attribute confusion: when a model generates correct entities/attributes, but they are associated incorrectly.
 
@@ -49,10 +49,10 @@ To measure the alignment between the conditioning prompt and the generated image
 </p>
 
 ## Key Contributions
-- We investigate and validate the overlooked <strong>attribute confusion</strong> problem in T2I evaluation with a <strong>carefully designed evaluation data</strong> covering both automated metrics and human evaluation.
-- We demonstrate that <strong>visual localization and attribute-centric VQA</strong> are effective strategies in addressing attribute confusion evaluation.
-- We propose a <strong>new human evaluation protocol</strong> and an <strong>automated T2I evaluation method L-VQAScore</strong>, leveraging both reflection and leakage questions on localized visual content.
-- L-VQAScore effectively mitigates the attribute confusion in T2I evaluation, achieving <strong>improved correlation with human annotations</strong> compared to state-of-the-art metrics.
+- We investigate and validate the overlooked <em>attribute confusion</em> problem in T2I evaluation with a <em>carefully designed evaluation data</em> covering both automated metrics and human evaluation.
+- We demonstrate that <em>visual localization and attribute-centric VQA</em> are effective strategies in addressing attribute confusion evaluation.
+- We propose a <em>new human evaluation protocol</em> and an <em>automated T2I evaluation method L-VQAScore</em>, leveraging both reflection and leakage questions on localized visual content.
+- L-VQAScore effectively mitigates the attribute confusion in T2I evaluation, achieving <em>improved correlation with human annotations</em> compared to state-of-the-art metrics.
 
 ![Performance Comparision](/static/image/results.png)
 <p style="text-align: center; font-size: 0.9rem;">
