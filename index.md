@@ -4,7 +4,7 @@ permalink: /
 
 title: Evaluating Attribute Confusion in Fashion Text-to-Image Generation
 authors:
-    Ziyue Liu, Federico Girella, Yiming Wang , Davide Talon
+    Ziyue Liu<sup>1</sup><sup>2</sup>, Federico Girella<sup>1</sup>, Yiming Wang<sup>3</sup>, Davide Talon<sup>3</sup>
 affiliations:
     University of Verona, Polytechnic University of Turin, Fondazione Bruno Kessler
 paper: coming soon
