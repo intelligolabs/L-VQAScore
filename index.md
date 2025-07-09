@@ -37,7 +37,9 @@ In this paper, we propose an improved human evaluation protocol and an automatic
 To measure the alignment between the conditioning prompt and the generated image, we represent the conditioning text into structured entity-attribute pairs. L-VQAScore localizes regions of interest leveraging entity categories via a semantic segmentation module. Then reflection and leakage questions are composed to evaluate the presence of desired and leaked attributes in the localized regions, accounting for both attribute depiction and localization.
 ![Method1](/static/image/method_1.png)
 ![Method2](/static/image/method_2.png)
-* Figure 1: L-VQAScore approach. *
+<p style="text-align: center;">
+    <em>Figure 1: L-VQAScore approach.</em>
+</p>
 
 ## Key Contributions
 - We investigate and validate the overlooked attribute confusion problem in T2I evaluation with a carefully designed evaluation data covering both automated metrics and human evaluation.
@@ -47,10 +49,10 @@ To measure the alignment between the conditioning prompt and the generated image
 
 ![Performance Comparision](/static/image/results.png)
 
-* Figure 2: Left Top: Agreement rates for user human evaluation studies. Left Bottom: Failure rate of current T2I evaluation metrics, measured as the percentage of test cases where attribute-swapped pairs receive higher scores. Right: Performance in T2I alignment regarding the localized study F1 Score, Precision and Recall. L-VQAScore consistently surpasses existing state-of-the-art methods. *
+<em>Figure 2: Left Top: Agreement rates for user human evaluation studies. Left Bottom: Failure rate of current T2I evaluation metrics, measured as the percentage of test cases where attribute-swapped pairs receive higher scores. Right: Performance in T2I alignment regarding the localized study F1 Score, Precision and Recall. L-VQAScore consistently surpasses existing state-of-the-art methods.</em>
 
 ## Relevant Works
-We direct interested readers to our concurrent research for investigation into localized text-to-image generation with improved controllability: <a href="https://federicogirella.github.io/lots/">Project Page</a>
+We direct interested readers to our concurrent research for investigation into text-to-image generation with localized controllability in ICCV25 <a href="https://federicogirella.github.io/lots/">Project Page</a>
 
 ## Citation
 ```
