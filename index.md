@@ -37,7 +37,7 @@ In this paper, we propose an improved human evaluation protocol and an automatic
 To measure the alignment between the conditioning prompt and the generated image, we represent the conditioning text into structured entity-attribute pairs. L-VQAScore localizes regions of interest leveraging entity categories via a semantic segmentation module. Then reflection and leakage questions are composed to evaluate the presence of desired and leaked attributes in the localized regions, accounting for both attribute depiction and localization.
 ![Method1](/static/image/method_1.png)
 ![Method2](/static/image/method_2.png)
-<p style="text-align: center;">
+<p style="text-align: center; font-size: 0.9rem;">
     <em>Figure 1: L-VQAScore approach.</em>
 </p>
 
@@ -48,11 +48,12 @@ To measure the alignment between the conditioning prompt and the generated image
 - L-VQAScore effectively mitigates the attribute confusion in T2I evaluation, achieving improved correlation with human annotations compared to state-of-the-art metrics.
 
 ![Performance Comparision](/static/image/results.png)
-
+<p style="text-align: center; font-size: 0.9rem;">
 <em>Figure 2: Left Top: Agreement rates for user human evaluation studies. Left Bottom: Failure rate of current T2I evaluation metrics, measured as the percentage of test cases where attribute-swapped pairs receive higher scores. Right: Performance in T2I alignment regarding the localized study F1 Score, Precision and Recall. L-VQAScore consistently surpasses existing state-of-the-art methods.</em>
+</p>
 
 ## Relevant Works
-We direct interested readers to our concurrent research for investigation into text-to-image generation with localized controllability in ICCV25 <a href="https://federicogirella.github.io/lots/">Project Page</a>
+We direct interested readers to our concurrent research for investigation into text-to-image generation with enhanced localization and controllability: <a href="https://federicogirella.github.io/lots/">LOTS of Fashion! Multi-Conditioning for Image Generation via Sketch-Text Pairing (ICCV25)</a>
 
 ## Citation
 ```
