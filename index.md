@@ -14,7 +14,7 @@ authors:
                     target="_blank">Davide Talon</a><sup>3</sup>
 affiliations:
     <sup>1</sup>University of Verona, <sup>2</sup>Polytechnic University of Turin, <sup>3</sup>Fondazione Bruno Kessler
-paper: https://services.arxiv.org/html/submission/6609653/view
+paper: http://arxiv.org/abs/2507.07079
 code: https://github.com/intelligolabs/L-VQAScore
 data: https://github.com/intelligolabs/L-VQAScore
 ---
