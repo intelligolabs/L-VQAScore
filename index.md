@@ -8,7 +8,7 @@ authors:
                     target="_blank">Ziyue Liu</a><sup>1</sup><sup>2</sup>, 
     <a href="https://federicogirella.github.io/"
                     target="_blank">Federico Girella</a><sup>1</sup>, 
-    <a href="https://www.yimingwang.it/"
+    <a href="https://www.yimingwang.me/"
                     target="_blank">Yiming Wang</a><sup>3</sup>, 
     <a href="https://davidetalon.github.io/"
                     target="_blank">Davide Talon</a><sup>3</sup>
