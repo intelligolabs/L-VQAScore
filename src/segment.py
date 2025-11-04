@@ -29,10 +29,6 @@ try:
 except ImportError:
     print("Warning: SAM2 or Transformers not found. Please install required packages.")
 
-# -------------------------------------------------------------------------
-# Seed
-# -------------------------------------------------------------------------
-
 def set_seed(seed=42):
     """Set random seed for reproducibility."""
     import random
@@ -45,10 +41,6 @@ def set_seed(seed=42):
     torch.backends.cudnn.benchmark = False
 
 set_seed(42)
-
-# -------------------------------------------------------------------------
-# Annotation parsing
-# -------------------------------------------------------------------------
 
 def load_simple_annotations(json_file):
     """
@@ -86,11 +78,6 @@ def load_simple_annotations(json_file):
         }
     print(f"Loaded {len(image_data)} images from {json_file}")
     return image_data
-
-
-# -------------------------------------------------------------------------
-# SAM + GroundingDINO inference
-# -------------------------------------------------------------------------
 
 def crop_image_with_mask(image: Image.Image, mask: np.array, resize=None, pad=False):
     """Crop an image using its binary mask."""
@@ -137,10 +124,6 @@ def save_cropped(image, mask, save_path):
     cropped = crop_image_with_mask(image, mask)
     save_path.parent.mkdir(parents=True, exist_ok=True)
     cropped.save(save_path)
-
-# -------------------------------------------------------------------------
-# Main
-# -------------------------------------------------------------------------
 
 def main(args):
     device = args.device
