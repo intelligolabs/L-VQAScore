@@ -48,8 +48,11 @@ python simple_vqa_pipeline.py \
   --device cuda:0
 
 This will:
+
 Load images and items from your JSON file. Generate reflected and leaked questions based on item names and attribute names.
+
 Detect and segment each item_name. Save cropped images result to the specified output directory.
+
 VQA scoring over segmented items. Return precision, recall and f1 metrics.
 
 ## ✨ Customization
