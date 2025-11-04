@@ -42,6 +42,7 @@ Provide your data in a simplified structure like this:
 ## 🚀 Quick Start
 
 Run the Script:
+
 python simple_vqa_pipeline.py \
   --annotation-file ./example_input.json \
   --output-dir ./cropped_items \
