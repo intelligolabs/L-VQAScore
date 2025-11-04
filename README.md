@@ -28,10 +28,10 @@ Despite the rapid advances in Text-to-Image (T2I) generation models, their evalu
 
 L-VQAScore pipeline perform automatic item cropping and VQA-style scoring, with a user-provided JSON annotation file describing item-attribute pair in images.
 
----
+
 ## 📦 Requirements
 
-Install dependencies following requirements. SAM2, GroundingDINO, T2V need to be installed.
+Install dependencies following requirements. SAM2, GroundingDINO, <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a> need to be installed.
 
 
 ## 🗂 JSON Format
