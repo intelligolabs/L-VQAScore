@@ -32,7 +32,7 @@ def set_seed(seed=42):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
-set_seed(42)
+set_seed(args.seed)
 
 def load_simple_annotations(json_file):
     """
@@ -174,6 +174,6 @@ if __name__ == "__main__":
     parser.add_argument("--threshold", type=float, default=0.5, help="Threshold for Precision, Recall, F1 calculation")
     parser.add_argument("--mode", type=str, choices=["cropped", "full"], default="cropped", help="VQA mode: cropped or full image")
     parser.add_argument("--device", type=str, default="cuda:0", help="Device for VQA model")
-    parser.add_argument("--seed", default=42, help="Seed")
+    parser.add_argument("--seed", default=42, help="Set seed")
     args = parser.parse_args()
     main(args)
