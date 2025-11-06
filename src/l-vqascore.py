@@ -38,7 +38,7 @@ def load_simple_annotations(json_file):
     [
         {
             "image_id": "001",
-            "image_path": "/path/to/image_001.jpg",
+            "image_path": "/path/to/image_001.jpg", 
             "items": [
                 {
                     "item_name": "shirt",
@@ -70,6 +70,9 @@ def load_simple_annotations(json_file):
 
 def compute_stats(scores_reflect, scores_leak, threshold=0.5):
     """Compute precision, recall, f1."""
+    scores_reflect = [x for sub in scores_reflect for x in sub]
+    scores_leak    = [x for sub in scores_leak for x in sub]
+    
     tp = sum(s >= threshold for s in scores_reflect) 
     fp = sum(s >= threshold for s in scores_leak) 
     fn = sum(s < threshold for s in scores_reflect) 
@@ -113,12 +116,18 @@ def main(args):
     for image_id, content in tqdm(data.items(), desc="Processing images"):
         image_path = Path(content["image_path"])
         items = content["items"]
-
+        if not items:
+            print(f"⚠️ Skipping image {image_id}: no item.")
+            continue
+            
         for item in items:
             item_name = item["item_name"]
             attributes = item.get("attributes", [])
             questions = item.get("questions", [])
 
+            if not attributes:
+                print(f"⚠️ Skipping item '{item_name}' in image {image_id}: no attributes.")
+                continue
             # reflected questions: correct attribute-item pairs
             reflected_questions = [f"a {attr} {item_name}" for attr in attributes]
 
@@ -128,7 +137,12 @@ def main(args):
                 if other["item_name"] != item_name:
                     for attr in attributes:
                         leaked_questions.append(f"a {attr} {other['item_name']}")
-
+                        
+            if len(reflected_questions) == 0:
+                print(f"⚠️ WARNING: No reflected questions for image {image_id}, item {item_name} (single-item image).")
+            if len(leaked_questions) == 0:
+                print(f"⚠️ WARNING: No leaked questions for image {image_id}, item {item_name} (single-item image).")
+                
             # determine cropped or full image to use
             crop_path = Path(args.sam_dir) / f"{image_id}_{item_name}.png"
             if args.mode == "cropped" and crop_path.exists():
@@ -161,13 +175,12 @@ def main(args):
     with open(args.output_json, "w") as f:
         json.dump(results, f, indent=4)
     print(f"VQA results saved to {args.output_json}")
-    print(f"\nL-VQAScore - Overall Precision: {stats["precision"]:.3f}, Recall: {stats["recall"]:.3f}, F1: {stats["f1"]:.3f}\n")
+    print(f"\nL-VQAScore - Overall Precision: {stats['precision']:.3f}, Recall: {stats['recall']:.3f}, F1: {stats['f1']:.3f}\n")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Compute reflected and leaked VQA scores")
     parser.add_argument("--annotation-file", type=str, required=True, help="Path to annotation JSON")
-    parser.add_argument("--image-folder", type=str, required=True, help="Root folder of images")
     parser.add_argument("--sam-dir", type=str, required=True, help="Path to cropped images (from SAM segmentation)")
     parser.add_argument("--output-json", type=str, default="./vqa_scores.json", help="Output file for VQA results")
     parser.add_argument("--threshold", type=float, default=0.5, help="Threshold for Precision, Recall, F1 calculation")
