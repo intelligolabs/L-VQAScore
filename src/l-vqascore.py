@@ -72,9 +72,9 @@ def load_simple_annotations(json_file):
 
 def compute_stats(scores_reflect, scores_leak, threshold=0.5):
     """Compute precision, recall, f1."""
-    tp = sum(s >= threshold for s in scores_reflect)
-    fp = sum(s >= threshold for s in scores_leak)
-    fn = sum(s < threshold for s in scores_reflect)
+    tp = sum(s >= threshold for s in scores_reflect) 
+    fp = sum(s >= threshold for s in scores_leak) 
+    fn = sum(s < threshold for s in scores_reflect) 
 
     precision = tp / (tp + fp + 1e-8)
     recall = tp / (tp + fn + 1e-8)
@@ -110,7 +110,7 @@ def main(args):
     print("Initializing VQA model...")
     model = t2v_metrics.VQAScore(model='clip-flant5-xxl', device=args.device)
 
-    results = []
+    results, ref_scores_list, leak_scores_list = [], [], []
     for image_id, content in tqdm(data.items(), desc="Processing images"):
         image_path = Path(content["image_path"])
         items = content["items"]
@@ -141,9 +141,8 @@ def main(args):
             ref_scores = run_vqa(model, eval_img, reflected_questions)
             leak_scores = run_vqa(model, eval_img, leaked_questions)
 
-            # stats
-            stats = compute_stats(ref_scores, leak_scores, args.threshold)
-
+            ref_scores_list.append(ref_scores)
+            leak_scores_list.append(leak_scores)
             results.append({
                 "image_id": image_id,
                 "item_name": item_name,
@@ -153,20 +152,17 @@ def main(args):
                 "leaked_scores": leak_scores,
                 "reflected_avg": float(np.mean(ref_scores)) if ref_scores else 0.0,
                 "leaked_avg": float(np.mean(leak_scores)) if leak_scores else 0.0,
-                "stats": stats,
                 "mode": args.mode
             })
 
+    # stats: cross image
+    # it is also possible to calculate per image stats
+    stats = compute_stats(ref_scores_list, leak_scores_list, args.threshold)
     results = convert_tensor_to_python(results)
     with open(args.output_json, "w") as f:
         json.dump(results, f, indent=4)
-    print(f"Results saved to {args.output_json}")
-
-    # overall mean stats
-    all_prec = np.mean([r["stats"]["precision"] for r in results])
-    all_rec = np.mean([r["stats"]["recall"] for r in results])
-    all_f1 = np.mean([r["stats"]["f1"] for r in results])
-    print(f"\nOverall Precision: {all_prec:.3f}, Recall: {all_rec:.3f}, F1: {all_f1:.3f}\n")
+    print(f"VQA results saved to {args.output_json}")
+    print(f"\nL-VQAScore - Overall Precision: {stats["precision"]:.3f}, Recall: {stats["recall"]:.3f}, F1: {stats["f1"]:.3f}\n")
 
 
 if __name__ == "__main__":
@@ -175,7 +171,7 @@ if __name__ == "__main__":
     parser.add_argument("--image-folder", type=str, required=True, help="Root folder of images")
     parser.add_argument("--sam-dir", type=str, required=True, help="Path to cropped images (from SAM segmentation)")
     parser.add_argument("--output-json", type=str, default="./vqa_scores.json", help="Output file for VQA results")
-    parser.add_argument("--threshold", type=float, default=0.5, help="Threshold for positive prediction")
+    parser.add_argument("--threshold", type=float, default=0.5, help="Threshold for Precision, Recall, F1 calculation")
     parser.add_argument("--mode", type=str, choices=["cropped", "full"], default="cropped", help="VQA mode: cropped or full image")
     parser.add_argument("--device", type=str, default="cuda:0", help="Device for VQA model")
     args = parser.parse_args()
