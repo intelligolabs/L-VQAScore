@@ -174,5 +174,6 @@ if __name__ == "__main__":
     parser.add_argument("--threshold", type=float, default=0.5, help="Threshold for Precision, Recall, F1 calculation")
     parser.add_argument("--mode", type=str, choices=["cropped", "full"], default="cropped", help="VQA mode: cropped or full image")
     parser.add_argument("--device", type=str, default="cuda:0", help="Device for VQA model")
+    parser.add_argument("--seed", default=42, help="Seed")
     args = parser.parse_args()
     main(args)
