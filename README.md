@@ -28,7 +28,7 @@ We propose a localized human evaluation protocol and introduce a novel automatic
 
 ## L-VQAScore
 
-L-VQAScore pipeline perform automatic item cropping and VQA-style scoring, with images and a user-provided JSON annotation file describing item-attribute pair in images.
+L-VQAScore pipeline perform automatic item cropping and VQA-style scoring, with images and a user-provided JSON annotation file describing item-attribute pair.
 
 
 ## 📦 Requirements
