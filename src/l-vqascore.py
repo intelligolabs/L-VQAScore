@@ -32,8 +32,6 @@ def set_seed(seed=42):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
-set_seed(args.seed)
-
 def load_simple_annotations(json_file):
     """
     Expected structure:
@@ -104,6 +102,7 @@ def run_vqa(model, img_path, questions):
         return [0.0 for _ in questions]
 
 def main(args):
+    set_seed(args.seed)
     print("Loading annotations...")
     data = load_simple_annotations(args.annotation_file)
 
