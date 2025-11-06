@@ -172,7 +172,15 @@ def main(args):
     with open(args.output_json, "w") as f:
         json.dump(results, f, indent=4)
     print(f"VQA results saved to {args.output_json}")
-    print(f"\nL-VQAScore - Overall Precision: {stats['precision']:.3f}, Recall: {stats['recall']:.3f}, F1: {stats['f1']:.3f}\n")
+    
+    metric_text = (
+    f"L-VQAScore - Overall Precision: {stats['precision']:.3f}, "
+    f"Recall: {stats['recall']:.3f}, F1: {stats['f1']:.3f}\n")
+    with open(args.metric_log, "w") as f:
+        f.write(metric_text)
+
+    print(f"Metrics saved to {args.metric_log}")
+    print(metric_text)
 
 
 if __name__ == "__main__":
@@ -184,5 +192,6 @@ if __name__ == "__main__":
     parser.add_argument("--mode", type=str, choices=["cropped", "full"], default="cropped", help="VQA mode: cropped or full image")
     parser.add_argument("--device", type=str, default="cuda:0", help="Device for VQA model")
     parser.add_argument("--seed", default=42, help="Set seed")
+    parser.add_argument("--result-file",type=str, default="./lvqascore.txt", help="File to save final precision/recall/f1 metrics",)
     args = parser.parse_args()
     main(args)
