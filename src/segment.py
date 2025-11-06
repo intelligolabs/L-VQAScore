@@ -7,7 +7,7 @@ Pipeline for item cropping and VQA evaluation.
 This script processes a user-provided JSON annotation file describing item-attribute pair in images, to perform automatic item cropping.
 It performs the following steps:
 1. Parse JSON annotations with item-attribute pairs.
-2. Use GroundingDINO + SAM2 to crop each item based on item name.
+2. Use GroundingDINO + SAM2 to blur and crop each item with item name input.
 3. Save segmented images.
 
 """
@@ -40,8 +40,6 @@ def set_seed(seed=42):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
-set_seed(42)
-
 def load_simple_annotations(json_file):
     """
     Load and process JSON annotations.
@@ -54,7 +52,6 @@ def load_simple_annotations(json_file):
                 {
                     "item_name": "shirt",
                     "attributes": ["white", "striped"],
-                    "questions": ["a white shirt", "a striped shirt"]
                 },
                 ...
             ]
@@ -79,23 +76,62 @@ def load_simple_annotations(json_file):
     print(f"Loaded {len(image_data)} images from {json_file}")
     return image_data
 
-def crop_image_with_mask(image: Image.Image, mask: np.array, resize=None, pad=False):
-    """Crop an image using its binary mask."""
+def crop_image_with_mask(image: Image.Image, mask: np.array, resize=True):
+    """Crop an image using its binary mask. Optional resize."""
     if image.size[0] != mask.shape[1] or image.size[1] != mask.shape[0]:
         mask = np.array(Image.fromarray(mask.astype(np.uint8)).resize(image.size, Image.NEAREST)).astype(bool)
 
     mask_3d = np.repeat(mask[:, :, np.newaxis], 3, axis=2)
     cropped_image_np = np.array(image) * mask_3d
     cropped_image_np = np.clip(cropped_image_np, 0, 255).astype(np.uint8)
-    cropped_image = Image.fromarray(cropped_image_np)
+    processed_image = Image.fromarray(cropped_image_np)
 
     if resize:
-        cropped_image = ImageOps.contain(cropped_image, resize, method=Image.LANCZOS)
-    if pad:
-        cropped_image = ImageOps.pad(cropped_image, resize, color="#fff")
-    return cropped_image
+        orig_w, orig_h = image.size
+        processed_image = ImageOps.contain(processed_image, (orig_w, orig_h), method=Image.LANCZOS)
+    return processed_image
+    
+def blur_crop_image_with_mask(image: Image.Image, mask: np.ndarray, resize = True, crop_expansion = 0.1, pad = True, blur_kernel_size = 51, blur_sigma = 25):
+    """Given an image and its binary mask, apply background blurring, crop the masked object with optional padding, 
+    and resize the cropped output to match the original image dimensions while preserving aspect ratio.
+    Note: blurring strength is adjustable, with the default setting recommended from our evaluation."""
+    if image.size[0] != mask.shape[1] or image.size[1] != mask.shape[0]:
+        mask = np.array(Image.fromarray(mask.astype(np.uint8)).resize(image.size, Image.NEAREST)).astype(bool)
+    image_np = np.array(image)
 
-def detect_and_crop(image_path, text_prompt, predictor, grounding_model, processor, device):
+    blurred_np = cv2.GaussianBlur(image_np, (blur_kernel_size, blur_kernel_size), blur_sigma)
+    mask_3d = np.repeat(mask[:, :, np.newaxis], 3, axis=2)
+    blended_np = np.where(mask_3d, image_np, blurred_np).astype(np.uint8)
+
+    ys, xs = np.where(mask)
+    if len(xs) == 0:
+        # no foreground → just return blurred background
+        cropped_np = blended_np
+    else:
+        x_min, x_max = xs.min(), xs.max()
+        y_min, y_max = ys.min(), ys.max()
+        # Expand bbox
+        bw = x_max - x_min
+        bh = y_max - y_min
+        expand_x = int(bw * crop_expansion)
+        expand_y = int(bh * crop_expansion)
+        x_min = max(0, x_min - expand_x)
+        y_min = max(0, y_min - expand_y)
+        x_max = min(mask.shape[1], x_max + expand_x)
+        y_max = min(mask.shape[0], y_max + expand_y)
+        cropped_np = blended_np[y_min:y_max, x_min:x_max]
+
+    processed_image = Image.fromarray(cropped_np)
+    if resize:
+        orig_w, orig_h = image.size
+        processed_image = ImageOps.contain(processed_image, (orig_w, orig_h), method=Image.LANCZOS)
+    if pad:
+        orig_w, orig_h = image.size
+        processed_image = ImageOps.pad(processed_image, (orig_w, orig_h), color="#ffffff")
+
+    return processed_image
+
+def detect_seg(image_path, text_prompt, predictor, grounding_model, processor, device):
     """Perform detection and segmentation for a given image and text prompt."""
     image = Image.open(image_path).convert("RGB")
     predictor.set_image(np.array(image))
@@ -119,13 +155,19 @@ def detect_and_crop(image_path, text_prompt, predictor, grounding_model, process
         mask = masks
     return image, mask
 
-def save_cropped(image, mask, save_path):
+def save_cropped(image, mask, save_path, mode='blur'):
     """Save cropped image."""
-    cropped = crop_image_with_mask(image, mask)
+    if mode == 'blur':
+        processed_image = blur_crop_image_with_mask(image, mask) 
+    elif mode == 'crop':
+        processed_image = crop_image_with_mask(image, mask)
+    else:
+        raise ValueError(f"Unknown mode: {mode}. Use 'blur' or 'crop'.")
     save_path.parent.mkdir(parents=True, exist_ok=True)
-    cropped.save(save_path)
+    processed_image.save(save_path)
 
 def main(args):
+    set_seed(args.seed)
     device = args.device
     print(f"Running on device: {device}")
 
@@ -152,8 +194,8 @@ def main(args):
             prompt = item_name
             save_path = output_dir / f"{image_id}_{item_name}.png"
 
-            image, mask = detect_and_crop(image_path, prompt, predictor, grounding_model, processor, device)
-            save_cropped(image, mask, save_path)
+            image, mask = detect_seg(image_path, prompt, predictor, grounding_model, processor, device)
+            save_cropped(image, mask, save_path, args.mode)
             #print(f"Saved cropped image for '{item_name}' → {save_path}")
 
     print("\nProcessing complete.")
@@ -167,5 +209,7 @@ if __name__ == "__main__":
     parser.add_argument("--sam-checkpoint", type=str, default="./checkpoints/sam2.1_hiera_large.pt", help="SAM2 checkpoint path.")
     parser.add_argument("--sam-config", type=str, default="configs/sam2.1/sam2.1_hiera_l.yaml", help="SAM2 config path.")
     parser.add_argument("--grounding-model", type=str, default="IDEA-Research/grounding-dino-tiny", help="GroundingDINO model name.")
+    parser.add_argument("--seed", default=42, help="Set seed")
+    parser.add_argument("--mode", type=str, choices=["crop", "blur"], default="blur", help="Segment mode: blur, crop")
     args = parser.parse_args()
     main(args)
