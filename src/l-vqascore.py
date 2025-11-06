@@ -138,11 +138,9 @@ def main(args):
                     for attr in attributes:
                         leaked_questions.append(f"a {attr} {other['item_name']}")
                         
-            if len(reflected_questions) == 0:
-                print(f"⚠️ WARNING: No reflected questions for image {image_id}, item {item_name} (single-item image).")
-            if len(leaked_questions) == 0:
-                print(f"⚠️ WARNING: No leaked questions for image {image_id}, item {item_name} (single-item image).")
-                
+            if not leaked_questions:
+                print(f"Skipping item {item_name} in {image_id}: no leaked questions.")
+                continue    
             # determine cropped or full image to use
             crop_path = Path(args.sam_dir) / f"{image_id}_{item_name}.png"
             if args.mode == "cropped" and crop_path.exists():
@@ -169,7 +167,6 @@ def main(args):
             })
 
     # stats: cross image
-    # it is also possible to calculate per image stats
     stats = compute_stats(ref_scores_list, leak_scores_list, args.threshold)
     results = convert_tensor_to_python(results)
     with open(args.output_json, "w") as f:
