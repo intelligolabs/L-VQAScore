@@ -62,9 +62,11 @@ Provide your annotation data structure like this:
 
 We recommend using data that contains multiple items and attributes, as it leads to more reliable and stable evaluation regarding attribute confusion.
 
+
 ## 🚀 Quick Start
 
 Run the Script: `bash main.sh`
+
 
 ## ✨ Citation
 
@@ -73,7 +75,7 @@ If you find our work usefull, please cite our work:
 @inproceedings{liu2025evaluating,
   title={Evaluating Attribute Confusion in Fashion Text-to-Image Generation},
   author={Liu, Ziyue and Girella, Federico and Wang, Yiming and Talon, Davide and others},
-  booktitle={23rd International Conference on Image Analysis and Processing},
+  booktitle={Proceedings of the 23rd International Conference on Image Analysis and Processing},
   year={2025}
 }
 ```
