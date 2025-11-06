@@ -11,7 +11,8 @@ Evaluating Attribute Confusion in Fashion
 
 <div>
     <p align="center">
-    Ziyue Liu, Federico Girella, Yiming Wang, Davide Talon
+    <a href="https://www.linkedin.com/in/ziyue-liu-karin/" target="_blank">Ziyue Liu</a><sup>1</sup><sup>2</sup>, <a href="https://federicogirella.github.io/" target="_blank">Federico Girella</a><sup>1</sup>, <a href="https://www.yimingwang.me/" target="_blank">Yiming Wang</a><sup>3</sup>, <a href="https://davidetalon.github.io/" target="_blank">Davide Talon</a><sup>3</sup>
+    <sup>1</sup>University of Verona, <sup>2</sup>Polytechnic University of Turin, <sup>3</sup>Fondazione Bruno Kessler
     </p>
 </div>
 
