@@ -16,7 +16,7 @@ affiliations:
     <sup>1</sup>University of Verona, <sup>2</sup>Polytechnic University of Turin, <sup>3</sup>Fondazione Bruno Kessler
 paper: http://arxiv.org/abs/2507.07079
 code: https://github.com/intelligolabs/L-VQAScore
-data: https://github.com/intelligolabs/L-VQAScore
+data: https://github.com/intelligolabs/L-VQAScore](https://huggingface.co/datasets/federicogirella/sketchy
 ---
 
 <!-- Using HTML to center the abstract -->
