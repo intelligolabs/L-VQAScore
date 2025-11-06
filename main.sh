@@ -3,12 +3,12 @@ set -e
 
 PY=python3
 
-# ---- EDIT THESE ----
+# ---- SETTING --------
 ANN="examples/annotations.json"     # annotation JSON path
 CROPS="crops"                       # directory to save crops
 DEVICE="cuda:0"                     # device
-MODE="blur"                         # crop | blur
-OUT="vqa_scores.json"               # output json
+OUT="./vqa_scores.json"               # vqa output json
+RESULT="./lvqascore.txt"            # l-vqascore final result
 # ---------------------
 
 echo "=== Step 1: Segment ==="
@@ -25,5 +25,6 @@ $PY src/l-vqascore.py \
     --output-json "$OUT" \
     --device "$DEVICE" \
     --mode "$MODE"
+    --result-file "$RESULT"
 
-echo "Done! Results saved to $OUT"
+echo "Done! Results saved to $OUT and $RESULT"
