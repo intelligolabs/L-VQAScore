@@ -16,7 +16,7 @@ affiliations:
     <sup>1</sup>University of Verona, <sup>2</sup>Polytechnic University of Turin, <sup>3</sup>Fondazione Bruno Kessler
 paper: http://arxiv.org/abs/2507.07079
 code: https://github.com/intelligolabs/L-VQAScore
-data: https://github.com/intelligolabs/L-VQAScore](https://huggingface.co/datasets/federicogirella/sketchy
+data: https://huggingface.co/datasets/federicogirella/sketchy
 ---
 
 <!-- Using HTML to center the abstract -->
@@ -67,7 +67,7 @@ We direct interested readers to our recent research for investigation into text-
 @inproceedings{liu2025evaluating,
   title={Evaluating Attribute Confusion in Fashion Text-to-Image Generation},
   author={Liu, Ziyue and Federico, Girella and Yiming, Wang and Davide, Talon},
-  booktitle={Proceedings of International Conference on Image Analysis and Processing},
+  booktitle={Proceedings of the 23rd International Conference on Image Analysis and Processing},
   year={2025},
 }
 ```
