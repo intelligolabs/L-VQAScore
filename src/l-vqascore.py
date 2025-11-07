@@ -93,16 +93,25 @@ def convert_tensor_to_python(data):
     else:
         return data
 
-def run_vqa(model, img_path, questions):
-    """Run VQA model on given image and list of questions."""
+
+def run_vqa(model, img_path, questions, batch_size=2):
+    """Run VQA on given image and list of questions, with controllable batch size for texts."""
     if not questions:
         return []
-    try:
-        scores = model(images=[str(img_path)], texts=questions)
-        return scores.tolist()[0]
-    except Exception as e:
-        print(f"⚠️ VQA failed on {img_path}: {e}")
-        return [0.0 for _ in questions]
+
+    results = []
+    img = [str(img_path)] 
+    for i in range(0, len(questions), batch_size):
+        batch_q = questions[i:i + batch_size]
+        try:
+            batch_scores = model(images=img, texts=batch_q)
+            # model returns shape: [1, batch_size]
+            results.extend(batch_scores.tolist()[0])
+        except Exception as e:
+            print(f"⚠️ VQA batch failed on {img_path}: {e}")
+            results.extend([0.0] * len(batch_q))
+
+    return results
 
 def main(args):
     set_seed(args.seed)
@@ -149,8 +158,8 @@ def main(args):
                 eval_img = image_path
 
             # run vqa
-            ref_scores = run_vqa(model, eval_img, reflected_questions)
-            leak_scores = run_vqa(model, eval_img, leaked_questions)
+            ref_scores = run_vqa(model, eval_img, reflected_questions, args.batch_size)
+            leak_scores = run_vqa(model, eval_img, leaked_questions, args.batch_size)
 
             ref_scores_list.append(ref_scores)
             leak_scores_list.append(leak_scores)
@@ -176,10 +185,10 @@ def main(args):
     metric_text = (
     f"L-VQAScore - Overall Precision: {stats['precision']:.3f}, "
     f"Recall: {stats['recall']:.3f}, F1: {stats['f1']:.3f}\n")
-    with open(args.metric_log, "w") as f:
+    with open(args.result_file, "w") as f:
         f.write(metric_text)
 
-    print(f"Metrics saved to {args.metric_log}")
+    print(f"Metrics saved to {args.result_file}")
     print(metric_text)
 
 
@@ -192,6 +201,7 @@ if __name__ == "__main__":
     parser.add_argument("--mode", type=str, choices=["cropped", "full"], default="cropped", help="VQA mode: cropped or full image")
     parser.add_argument("--device", type=str, default="cuda:0", help="Device for VQA model")
     parser.add_argument("--seed", default=42, help="Set seed")
-    parser.add_argument("--result-file",type=str, default="./lvqascore.txt", help="File to save final precision/recall/f1 metrics",)
+    parser.add_argument("--result-file",type=str, default="./lvqascore.txt", help="File to save final precision/recall/f1 metrics")
+    parser.add_argument("--batch-size",type=str, default=2, help="Batch size for VQA scoring")
     args = parser.parse_args()
     main(args)
