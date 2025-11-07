@@ -38,7 +38,7 @@ L-VQAScore pipeline perform automatic item cropping and VQA-style scoring, with 
 
 Install dependencies following requirements. Before running L-VQAScore, make sure the following dependencies are installed: <a href="https://github.com/IDEA-Research/Grounded-SAM-2">Grounded-SAM-2</a>, <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a>.
 
-Installation Steps:
+**Installation Steps:**
 
 ```
 git clone https://github.com/yourrepo/L-VQAScore
@@ -56,7 +56,7 @@ L-VQAScore/
     sam.sh
 ```
     
-Create environment **t2v** following <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a> requirements. Create environment **sam** following <a href="https://github.com/IDEA-Research/Grounded-SAM-2">Grounded-SAM-2</a> requirements. Download checkpoints as required. 
+Create environment ***t2v*** following <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a> requirements. Create environment ***sam*** following <a href="https://github.com/IDEA-Research/Grounded-SAM-2">Grounded-SAM-2</a> requirements. Download checkpoints as required. 
 
 
 ## 🗂 JSON Format
@@ -70,8 +70,7 @@ Provide your annotation data structure like this:
             "items": [
                 {
                     "item_name": "shirt",
-                    "attributes": ["white", "striped"],
-                    "questions": ["a white shirt", "a striped shirt"]
+                    "attributes": ["white", "striped"]
                 },
                 ...
             ]
