@@ -96,6 +96,7 @@ bash ../sam.sh
 ```
 
 2) L-VQA Scoring
+
 Replace annotation path with your own path in `main.sh`.
 Run scripts:
 ```
