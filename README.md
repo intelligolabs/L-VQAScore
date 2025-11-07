@@ -36,7 +36,27 @@ L-VQAScore pipeline perform automatic item cropping and VQA-style scoring, with 
 
 ## 📦 Requirements
 
-Install dependencies following requirements. <a href="https://github.com/IDEA-Research/Grounded-SAM-2">Grounded-SAM-2</a> and <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a> need to be installed.
+Install dependencies following requirements. Before running L-VQAScore, make sure the following dependencies are installed: <a href="https://github.com/IDEA-Research/Grounded-SAM-2">Grounded-SAM-2</a>, <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a>.
+
+Installation Steps:
+
+```
+git clone https://github.com/yourrepo/L-VQAScore
+cd L-VQAScore
+git clone https://github.com/IDEA-Research/Grounded-SAM-2
+```
+
+After cloning, your directory structure should look like:
+
+```
+L-VQAScore/
+    Grounded-SAM-2/
+    src/
+    main.sh
+    sam.sh
+```
+    
+Create environment **t2v** following <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a> requirements. Create environment **sam** following <a href="https://github.com/IDEA-Research/Grounded-SAM-2">Grounded-SAM-2</a> requirements. Download checkpoints as required. 
 
 
 ## 🗂 JSON Format
@@ -65,7 +85,24 @@ We recommend using data that contains multiple items and attributes, as it leads
 
 ## 🚀 Quick Start
 
-Run the Script: `bash main.sh`
+1) Segmentation
+   
+Replace annotation path with your own path in `sam.sh`.
+Run scripts:
+```
+conda activate sam
+cd L-VQAScore/Grounded-SAM-2
+bash ../sam.sh
+```
+
+2) L-VQA Scoring
+Replace annotation path with your own path in `main.sh`.
+Run scripts:
+```
+conda activate t2v
+cd ..
+bash main.sh
+```
 
 
 ## ✨ Citation
