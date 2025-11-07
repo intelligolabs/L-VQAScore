@@ -36,9 +36,10 @@ L-VQAScore pipeline perform automatic item cropping and VQA-style scoring, with 
 
 ## 📦 Requirements
 
-Install dependencies following requirements. Before running L-VQAScore, make sure the following dependencies are installed: <a href="https://github.com/IDEA-Research/Grounded-SAM-2">Grounded-SAM-2</a>, <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a>.
+Install dependencies following requirements. 
+Before running L-VQAScore, make sure the following dependencies are installed: <a href="https://github.com/IDEA-Research/Grounded-SAM-2">Grounded-SAM-2</a>, <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a>.
 
-**Installation Steps:**
+***Installation Steps:***
 
 ```
 git clone https://github.com/yourrepo/L-VQAScore
