@@ -31,7 +31,7 @@ We propose a localized human evaluation protocol and introduce a novel automatic
 
 ## L-VQAScore
 
-L-VQAScore pipeline perform automatic item cropping and VQA-style scoring, towards user-provided images and corresponding JSON annotation file describing item-attribute pairs. It can be used to evaluate vision–language generative model performance.
+L-VQAScore pipeline perform automatic item cropping and VQA-style scoring, towards user-provided images and corresponding JSON annotation file describing item-attribute pairs. It can be used to evaluate vision–language generative model performance, particularly with respect to accuracy, localization, and controllability.
 
 
 ## 📦 Requirements
