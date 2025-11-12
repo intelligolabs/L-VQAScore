@@ -42,9 +42,9 @@ Before running L-VQAScore, make sure the following dependencies are installed: <
 Installation Steps:
 
 ```
-git clone https://github.com/yourrepo/L-VQAScore
+git clone https://github.com/intelligolabs/L-VQAScore.git
 cd L-VQAScore
-git clone https://github.com/IDEA-Research/Grounded-SAM-2
+git clone https://github.com/IDEA-Research/Grounded-SAM-2.git
 ```
 
 After cloning, your directory structure should look like:
@@ -57,7 +57,7 @@ L-VQAScore/
     sam.sh
 ```
     
-Create environment ***t2v*** following <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a> requirements. Create environment ***sam*** following <a href="https://github.com/IDEA-Research/Grounded-SAM-2">Grounded-SAM-2</a> requirements. Download checkpoints and setup as required. 
+Create environment ***t2v*** following <a href="https://github.com/linzhiqiu/t2v_metrics">T2V</a> requirements. Create environment ***sam*** following <a href="https://github.com/IDEA-Research/Grounded-SAM-2">Grounded-SAM-2</a> requirements. Set up and download checkpoints as required. 
 
 
 ## 🗂 JSON Format
